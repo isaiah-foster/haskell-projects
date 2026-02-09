@@ -1,11 +1,15 @@
-import Control.Arrow (Arrow(first))
-
 -- Isaiah Foster 11796849
 
 
 -----PART 1-----
 
 --1. Take List
+takeList :: Int -> [a] -> [a]
+takeList n [] = []
+takeList n (x:xs)
+    | n>0 = x : takeList (n-1) xs
+    | otherwise = []
+
 
 --2. Split by Condition
 splitByCondition :: (a -> Bool) -> [a] -> ([a], [a])
