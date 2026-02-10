@@ -66,7 +66,9 @@ mergeSort xs =
         second = snd touple
 
 --4. Insertion Sort
---insertionSort :: Ord a => [a] -> [a]
+insertionSort :: Ord a => [a] -> [a]
+insertionSort [] = []
+
 
 
 -----TEST FUNCTIONS-----
@@ -114,21 +116,29 @@ testMergeAscending =
 
 -----HELPER FUCTIONS-----
 
+--Predicate function for testing splitByCondition
 isEven :: Integer -> Bool
 isEven x = mod x 2 ==0
 
+--Predicate function for testing splitByCondition
 isPrime :: Int -> Bool
 isPrime x
     | elem x [0,1] = False
     | x==2 = True
     | otherwise = primeHelper x 2
 
+--Helper for the isPrime function
 primeHelper :: Int -> Int -> Bool
 primeHelper x inc
     | fromIntegral inc > sqrt (fromIntegral x) = True -- found fromIntegral online from stackoverflow
     | mod x inc == 0 = False
     | otherwise = primeHelper x (inc+1)
 
-
+--Helper for mergeSort
 splitInHalf :: [a] -> ([a], [a])
 splitInHalf xs = splitAt ((length xs+1) `div` 2) xs
+
+--Helper for insertionSort
+
+insertHelper :: a -> [a] -> [a]
+--insertHelper x (y:ys) =
