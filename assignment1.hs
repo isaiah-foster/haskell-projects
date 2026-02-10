@@ -3,13 +3,13 @@
 
 -----PART 1-----
 
+
 --1. Take List
 takeList :: Int -> [a] -> [a]
 takeList n [] = []
 takeList n (x:xs)
     | n>0 = x : takeList (n-1) xs
     | otherwise = []
-
 
 --2. Split by Condition
 splitByCondition :: (a -> Bool) -> [a] -> ([a], [a])
@@ -34,7 +34,9 @@ interleaveLists [] (y:ys)= if null(ys) then [y] else []
 interleaveLists (x:xs) (y:ys) = x : y : interleaveLists xs ys
 
 
+
 -----PART 2-----
+
 
 --1. Merge Ascending
 mergeAscending :: Ord a => [a] -> [a] -> [a]
@@ -70,8 +72,8 @@ insertionSort :: Ord a => [a] -> [a]
 insertionSort [] = []
 
 
-
 -----TEST FUNCTIONS-----
+
 
 testAll = do
     testSplitByCondition
@@ -114,7 +116,9 @@ testMergeAscending =
     then print "Merge ascending test passed"
     else print "Merge Acending test failed"
 
+
 -----HELPER FUCTIONS-----
+
 
 --Predicate function for testing splitByCondition
 isEven :: Integer -> Bool
@@ -139,6 +143,5 @@ splitInHalf :: [a] -> ([a], [a])
 splitInHalf xs = splitAt ((length xs+1) `div` 2) xs
 
 --Helper for insertionSort
-
 insertHelper :: a -> [a] -> [a]
 --insertHelper x (y:ys) =
