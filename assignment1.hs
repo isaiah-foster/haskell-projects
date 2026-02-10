@@ -70,6 +70,7 @@ mergeSort xs =
 --4. Insertion Sort
 insertionSort :: Ord a => [a] -> [a]
 insertionSort [] = []
+insertionSort (x:xs) = insertHelper x (insertionSort xs)
 
 
 -----TEST FUNCTIONS-----
@@ -80,13 +81,15 @@ testAll = do
     testZipLists
     testInterleaveLists
     testMergeAscending
+    testMergeSort
+    testInsertionSort
 
 testSplitByCondition =
     if 
         splitByCondition isEven [-2,-1,0,1,2,3] == ([-1,1,3],[-2,0,2])&&
         splitByCondition isPrime [0,1,2,3,7,8] == ([0,1,8],[2,3,7])
-    then print "Split by condition test passed"
-    else print "Split by condition test failed"
+    then print "Split by condition test PASSED"
+    else print "Split by condition test FAILED"
 
 testZipLists = 
     if 
@@ -95,8 +98,8 @@ testZipLists =
         null (zipLists[][])&&
         zipLists [1,2] [3,4] == [(1,3),(2,4)]
 
-    then print "Zip lists test passed"
-    else print "Zip lists test failed"
+    then print "Zip lists test PASSED"
+    else print "Zip lists test FAILED"
 
 testInterleaveLists = 
     if
@@ -105,16 +108,39 @@ testInterleaveLists =
         interleaveLists [1,2,3] [4,5,6,7] == [1,4,2,5,3,6,7]&&
         null(interleaveLists [][])
 
-    then print "Interleave lists test passed"
-    else print "Interleave lists test failed"
+    then print "Interleave lists test PASSED"
+    else print "Interleave lists test FAILED"
 
 testMergeAscending = 
     if
+        mergeAscending ([] :: [Int]) ([] :: [Int]) ==[]&&
         mergeAscending [1,3,5,7,9] [2,4,6,8,10] == [1,2,3,4,5,6,7,8,9,10]&&
         mergeAscending [] [1,2,3,4] == [1,2,3,4]&&
         mergeAscending [-100,1,100] [-1,0,1] == [-100,-1,0,1,1,100]
-    then print "Merge ascending test passed"
-    else print "Merge Acending test failed"
+    then print "Merge ascending test PASSED"
+    else print "Merge Acending test FAILED"
+
+testMergeSort = 
+    if
+        mergeSort ([] :: [Int]) == []&&
+        mergeSort [1] == [1]&&
+        mergeSort [1,2,3] == [1,2,3]&&
+        mergeSort [3,2,1] == [1,2,3]&&
+        mergeSort [3,1,2,3,1] == [1,1,2,3,3]&&
+        mergeSort [-1,-3,-2,0,2,1] == [-3,-2,-1,0,1,2]
+    then print "Merge sort test PASSED"
+    else print "Merge sort test FAILED"
+
+testInsertionSort =
+    if
+        insertionSort ([] :: [Int]) == []&&
+        insertionSort [1] == [1]&&
+        insertionSort [1,2,3] == [1,2,3]&&
+        insertionSort [3,2,1] == [1,2,3]&&
+        insertionSort [3,1,2,3,1] == [1,1,2,3,3]&&
+        insertionSort [-1,-3,-2,0,2,1] == [-3,-2,-1,0,1,2]
+    then print "Insertion sort test PASSED"
+    else print "Insertion sort test FAILED"
 
 
 -----HELPER FUCTIONS-----
@@ -143,5 +169,8 @@ splitInHalf :: [a] -> ([a], [a])
 splitInHalf xs = splitAt ((length xs+1) `div` 2) xs
 
 --Helper for insertionSort
-insertHelper :: a -> [a] -> [a]
---insertHelper x (y:ys) =
+insertHelper :: Ord t => t -> [t] -> [t]
+insertHelper x [] = [x]
+insertHelper x (y:ys)
+    | x <= y = x:y:ys
+    | otherwise = y:insertHelper x ys
