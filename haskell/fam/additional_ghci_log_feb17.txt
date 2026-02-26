@@ -1,0 +1,24 @@
+Last login: Tue Feb 17 14:17:19 on ttys000
+❯ cd code
+❯ cd 355-s26
+❯ mkdir fam
+❯ cd fam
+❯ code .
+❯ ghci
+Loaded package environment from /Users/b.kandaswamy/.ghc/aarch64-darwin-9.6.7/environments/default
+GHCi, version 9.6.7: https://www.haskell.org/ghc/  :? for help
+Loaded GHCi configuration from /Users/b.kandaswamy/.ghci
+λ> import Data.List
+λ> import Data.Char
+λ> dropWhile (<2) [1,2,3,4]
+[2,3,4]
+λ> dropWhile (==' ') "  subu"
+"subu"
+λ> words "haskell is great"
+["haskell","is","great"]
+λ> unwords it
+"haskell is great"
+λ> words "haskell         is                great"
+["haskell","is","great"]
+λ> unwords it
+"haskell is great"

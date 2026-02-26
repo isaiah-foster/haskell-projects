@@ -1,0 +1,261 @@
+~/code/355-s26/fam                                                                                                
+~/code/355-s26/fam                                            03:00:1
+~/code/355-s26/fam                                       03:00:10 P
+~/code/355-s26/fam                                    03:00:10 
+~/code/355-s26/fam                                 03:00:10 P
+~/code/355-s26/fam                       03:00:10 P
+❯ ghci fam.hs
+Loaded package environment from /Users/b.kandaswamy/.ghc/aarch64-darwin-9.6.7/environments/default
+GHCi, version 9.6.7: https://www.haskell.org/ghc/  :? for help
+Loaded GHCi configuration from /Users/b.kandaswamy/.ghci
+[1 of 2] Compiling Main             ( fam.hs, interpreted )
+Ok, one module loaded.
+λ> 
+λ> 
+λ> 
+λ> 
+λ> 
+λ> 
+λ> 
+λ> 
+λ> :r
+[1 of 2] Compiling Main             ( fam.hs, interpreted ) [Source file changed]
+Ok, one module loaded.
+λ> :t intBox
+intBox :: Box Integer
+λ> 
+λ> 
+λ> 
+λ> intBox
+
+<interactive>:14:1: error: [GHC-39999]
+    • No instance for ‘Show (Box Integer)’
+        arising from a use of ‘print’
+    • In a stmt of an interactive GHCi command: print it
+λ> :r
+[1 of 2] Compiling Main             ( fam.hs, interpreted ) [Source file changed]
+Ok, one module loaded.
+λ> intBox
+Box 2
+λ> :r
+[1 of 2] Compiling Main             ( fam.hs, interpreted ) [Source file changed]
+Ok, one module loaded.
+λ> 
+λ> 
+λ> intRecip 8
+0
+λ> intRecip 0
+*** Exception: divide by zero
+λ> :r
+[1 of 2] Compiling Main             ( fam.hs, interpreted ) [Source file changed]
+Ok, one module loaded.
+λ> :r
+[1 of 2] Compiling Main             ( fam.hs, interpreted ) [Source file changed]
+Ok, one module loaded.
+λ> 
+λ> 
+λ> safeIntRecip 0
+Empty
+λ> safeIntRecip 6
+Box 0
+λ> :r
+[1 of 2] Compiling Main             ( fam.hs, interpreted ) [Source file changed]
+Ok, one module loaded.
+λ> safeIntRecip 6
+Just 0
+λ> :t it
+it :: Maybe Int
+λ> 
+λ> 
+λ> 
+λ> 
+λ> :r
+[1 of 2] Compiling Main             ( fam.hs, interpreted ) [Source file changed]
+Ok, one module loaded.
+λ> safeIntRecip' 6
+Right 0
+λ> safeIntRecip' 0
+Left "Can't divide by 0"
+λ> :r
+[1 of 2] Compiling Main             ( fam.hs, interpreted ) [Source file changed]
+Ok, one module loaded.
+λ> double 10
+20
+λ> double myMaybeInt 
+
+<interactive>:40:1: error: [GHC-39999]
+    • No instance for ‘Num (Maybe Int)’ arising from a use of ‘double’
+    • In the expression: double myMaybeInt
+      In an equation for ‘it’: it = double myMaybeInt
+λ> :r
+[1 of 2] Compiling Main             ( fam.hs, interpreted ) [Source file changed]
+Ok, one module loaded.
+λ> double myMaybeInt 
+
+<interactive>:42:8: error: [GHC-83865]
+    • Couldn't match expected type ‘Int’ with actual type ‘Maybe Int’
+    • In the first argument of ‘double’, namely ‘myMaybeInt’
+      In the expression: double myMaybeInt
+      In an equation for ‘it’: it = double myMaybeInt
+λ> 
+λ> 
+λ> 
+λ> :r
+[1 of 2] Compiling Main             ( fam.hs, interpreted ) [Source file changed]
+Ok, one module loaded.
+λ> myFmap double (Just 10)
+
+<interactive>:47:8: error: [GHC-83865]
+    • Couldn't match expected type: Maybe Int
+                  with actual type: Int -> Int
+    • Probable cause: ‘double’ is applied to too few arguments
+      In the first argument of ‘myFmap’, namely ‘double’
+      In the expression: myFmap double (Just 10)
+      In an equation for ‘it’: it = myFmap double (Just 10)
+
+<interactive>:47:16: error: [GHC-83865]
+    • Couldn't match expected type: Int -> Int
+                  with actual type: Maybe a0
+    • Possible cause: ‘Just’ is applied to too many arguments
+      In the second argument of ‘myFmap’, namely ‘(Just 10)’
+      In the expression: myFmap double (Just 10)
+      In an equation for ‘it’: it = myFmap double (Just 10)
+λ> myFmap (Just 10) double
+Just 20
+λ> myFmap (Just 20) triple
+Just 60
+λ> myFmap Nothing triple
+Nothing
+λ> :r
+[1 of 2] Compiling Main             ( fam.hs, interpreted ) [Source file changed]
+Ok, one module loaded.
+λ> 
+λ> 
+λ> safeUpperCase "subu"
+Just "SUBU"
+λ> :t it
+it :: Maybe [Char]
+λ> safeUpperCase (Just "subu")
+
+<interactive>:56:16: error: [GHC-83865]
+    • Couldn't match expected type: [Char]
+                  with actual type: Maybe String
+    • In the first argument of ‘safeUpperCase’, namely ‘(Just "subu")’
+      In the expression: safeUpperCase (Just "subu")
+      In an equation for ‘it’: it = safeUpperCase (Just "subu")
+λ> :r
+[1 of 2] Compiling Main             ( fam.hs, interpreted ) [Source file changed]
+Ok, one module loaded.
+λ> safeUpperCase (Just "subu")
+
+<interactive>:58:16: error: [GHC-83865]
+    • Couldn't match type: Maybe String
+                     with: [Char]
+      Expected: String
+        Actual: Maybe String
+    • In the first argument of ‘safeUpperCase’, namely ‘(Just "subu")’
+      In the expression: safeUpperCase (Just "subu")
+      In an equation for ‘it’: it = safeUpperCase 
+λ> 
+λ> 
+λ> myFmap (Just "subu") safe
+safeIntRecip   safeUpperCase
+safeIntRecip'
+λ> myFmap (Just "subu") safeUpperCase 
+Just (Just "SUBU")
+λ> 
+λ> 
+λ> 
+λ> 
+λ> :t mDouble 
+mDouble :: Maybe Int -> Maybe Int
+λ> mDouble (Just 10)
+Just 20
+λ> dd = Just double
+λ> :t dd
+dd :: Maybe (Int -> Int)
+λ> dd (Just 10)
+
+<interactive>:71:1: error: [GHC-83865]
+    • Couldn't match expected type: Maybe a0 -> t
+                  with actual type: Maybe (Int -> Int)
+    • The function ‘dd’ is applied to one value argument,
+        but its type ‘Maybe (Int -> Int)’ has none
+      In the expression: dd (Just 10)
+      In an equation for ‘it’: it = dd (Just 10)
+    • Relevant bindings include it :: t (bound at <interactive>:71:1)
+λ> :{
+λ| inc::Int->Int
+λ| inc x = x + 1
+λ| :}
+λ> inc 10
+11
+λ> 
+λ> 
+λ> 
+λ> 
+λ> inc (Just 10)
+
+<interactive>:81:6: error: [GHC-83865]
+    • Couldn't match expected type ‘Int’ with actual type ‘Maybe a0’
+    • In the first argument of ‘inc’, namely ‘(Just 10)’
+      In the expression: inc (Just 10)
+      In an equation for ‘it’: it = inc (Just 10)
+λ> 
+λ> 
+λ> 
+λ> 
+λ> 
+λ> 
+λ> :t fmap
+fmap :: Functor f => (a -> b) -> f a -> f b
+λ> fmap inc (Just 10)
+Just 11
+λ> 
+λ> 
+λ> 
+λ> 
+λ> :i Maybe
+type Maybe :: * -> *
+data Maybe a = Nothing | Just a
+        -- Defined in ‘GHC.Maybe’
+instance Semigroup a => Monoid (Maybe a) -- Defined in ‘GHC.Base’
+instance Semigroup a => Semigroup (Maybe a)
+  -- Defined in ‘GHC.Base’
+instance Foldable Maybe -- Defined in ‘Data.Foldable’
+instance Traversable Maybe -- Defined in ‘Data.Traversable’
+instance Eq a => Eq (Maybe a) -- Defined in ‘GHC.Maybe’
+instance Ord a => Ord (Maybe a) -- Defined in ‘GHC.Maybe’
+instance Show a => Show (Maybe a) -- Defined in ‘GHC.Show’
+instance Read a => Read (Maybe a) -- Defined in ‘GHC.Read’
+instance Applicative Maybe -- Defined in ‘GHC.Base’
+instance Functor Maybe -- Defined in ‘GHC.Base’
+instance MonadFail Maybe -- Defined in ‘Control.Monad.Fail’
+instance Monad Maybe -- Defined in ‘GHC.Base’
+λ> fmap inc [1,2,4]
+[2,3,5]
+λ> fmap inc (Right 4)
+Right 5
+λ> :t dd
+dd :: Maybe (Int -> Int)
+λ> dd <*> Just 10
+Just 20
+λ> dd <*> [1,2,3]
+
+<interactive>:99:8: error: [GHC-83865]
+    • Couldn't match type ‘[]’ with ‘Maybe’
+      Expected: Maybe Int
+        Actual: [Int]
+    • In the second argument of ‘(<*>)’, namely ‘[1, 2, 3]’
+      In the expression: dd <*> [1, 2, 3]
+      In an equation for ‘it’: it = dd <*> [1, 2, 3]
+λ> dd <*> Just 10
+Just 20
+λ> 
+λ> 
+λ> 
+λ> 
+λ> 
+λ> 
+λ> 
+λ> 

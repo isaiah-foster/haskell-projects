@@ -92,3 +92,5 @@ posNeg (x:xs)
     | otherwise = (first, x:second)
     where 
         (first, second) = posNeg xs
+
+xy = posNeg[1,2,3,4,5,-1,-2,-3,-4]
