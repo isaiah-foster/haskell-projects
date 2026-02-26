@@ -1,2 +1,4 @@
 *.o
 dist-newstyle/
+.DS_Store
+.o
